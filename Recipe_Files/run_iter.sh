@@ -35,11 +35,9 @@ start_date=`date`
 
 delta_num=$1
 
-use_bucket=$2
-
 actual_delta_num=$delta_num+1
 
-exp_description="Last Bucket: Seed Model 1 hour + $delta_num delta blocks"
+exp_description="Loop A: Seed Model 1 hour + $delta_num delta blocks"
 
 echo ============================================================================
 echo "                Data & Lexicon & Language Preparation                     "
@@ -52,7 +50,7 @@ python3 Python_Files/modify_uttids.py $delta_num
 echo "New train utterance ids created!!!"
 
 # CALL PYTHON SCRIPT AT THIS POINT TO GENERATE THE REQUIRED FILES. THEN PROCEED.
-local_custom/data_prep.sh $AIR $use_bucket
+local_custom/data_prep.sh $AIR
 
 local_custom/create_glm_stm.sh $AIR
 
@@ -257,7 +255,7 @@ echo ===========================================================================
 echo "                    Doing Force Alignment (SGMM2)                         "
 echo ============================================================================
 
-steps_fa/align_fmllr.sh --nj "$train_nj" --cmd "$train_cmd" \
+steps_fa/align_fmllr.sh --nj "$train_nj" --retry_beam 250 --cmd "$train_cmd" \
  data/dev data/lang exp/tri3 exp/tri3_ali_fa
 : <<COMMENT
 echo ============================================================================

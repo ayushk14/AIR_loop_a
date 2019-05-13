@@ -6,8 +6,6 @@ export USER=$(whoami)
 
 iter_num=$1
 
-use_bucket=$2
-
 recipe_name="AIR_loop_a_${iter_num}"
 
 cp -a ~/kaldi/egs/timit ~/kaldi/egs/$recipe_name
@@ -51,4 +49,4 @@ echo "New recipe - $recipe_name created successfully with all appropriate files 
 
 cd ~/kaldi/egs/$recipe_name/s5/
 
-./run_iter.sh $iter_num $use_bucket
+./run_iter.sh $iter_num
